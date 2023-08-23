@@ -1,0 +1,27 @@
+extends layout
+
+block styles
+  link(rel="stylesheet" href="/stylesheets/games.css")
+
+block content
+  h1(style="background:white") Game page #{id} (#{title})
+
+  p#waiting(class=`${ready ? "hidden" : ""}`) Waiting on users (#[span.current-count #{count}] of #[span.required-count #{required_count}])
+
+  #game-table(class=`${ready ? "" : "hidden"} container-fluid vh-100`)
+    div(class="chat-session chat")
+      include chat.pug
+    .draw-pile
+      .card.special
+    #discard
+    form(action=`/games/${id}/skipTurn` onsubmit="return false;" method="post" style="position:absolute;bottom:0%;left:40%")
+      button(id="passturn") PassTurn
+
+  script(src = "/socket.io/socket.io.js")
+  script(src = "/javascript/setup.js")
+  script(src = "/javascript/chat.js")
+
+
+
+block footer
+  script(src="/javascript/join.js")
